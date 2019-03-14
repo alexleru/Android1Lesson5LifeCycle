@@ -1,45 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="ru.geekbrains.lifecycle.LifeCycleActivity">
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="372dp"
-        android:layout_height="130dp"
-        android:paddingStart="20dp"
-        android:layout_marginRight="8dp"
-        android:text="Демонстрация жизненного цикла Activity"
-        android:textAppearance="@style/TextAppearance.AppCompat"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintHorizontal_bias="0.25"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="8dp" />
-
-    <TextView
-        android:id="@+id/textCounter"
-        android:layout_width="181dp"
-        android:layout_height="57dp"
-        android:text="TextView"
-        android:textSize="48sp"
-        android:layout_marginRight="8dp"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="8dp"
-        tools:layout_editor_absoluteX="195dp" />
-
-    <Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Button"
-        android:layout_marginLeft="8dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="8dp"
-        app:layout_constraintRight_toLeftOf="@+id/textCounter"
-        android:layout_marginRight="8dp" />
-</android.support.constraint.ConstraintLayout>
+    android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Button
+            android:id="@+id/fragment_create"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/fragment_create"
+            android:onClick="on_fragment_create"
+            android:layout_margin="@dimen/margin"
+            tools:ignore="ButtonStyle"/>
+        <Button
+            android:id="@+id/fragment_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/fragment_delete"
+            android:onClick="on_fragment_delete"
+            android:layout_margin="@dimen/margin"
+            tools:ignore="ButtonStyle"/>
+    </LinearLayout>
+        <FrameLayout
+            android:id="@+id/fragment_frame_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+</LinearLayout>

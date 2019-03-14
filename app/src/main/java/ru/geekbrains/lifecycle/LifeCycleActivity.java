@@ -1,22 +1,20 @@
 package ru.geekbrains.lifecycle;
 
+import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
 public class LifeCycleActivity extends AppCompatActivity {
-
-    private final String LOG = "CYCLE"; //!!! ДЗ 2!!! для просмотра Лога
-
+    LifeCycleFragment fragment;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_life_cycle);
-
+        fragment = new LifeCycleFragment();
         String instanceState;
         if (savedInstanceState == null){
             instanceState = "Первый запуск!";
@@ -24,64 +22,77 @@ public class LifeCycleActivity extends AppCompatActivity {
         else{
             instanceState = "Повторный запуск!";
         }
-        Toast.makeText(getApplicationContext(), instanceState + " - onCreate()", Toast.LENGTH_SHORT).show();
-        Log.i(LOG, instanceState + " - onCreate()");//!!! ДЗ 2 !!!
-
+        showToastAndLog( instanceState + " - onCreate()");
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        Toast.makeText(getApplicationContext(), "onStart()", Toast.LENGTH_SHORT).show();
-        Log.i(LOG, "onStart()");//!!! ДЗ 2 !!!
+        showToastAndLog( "onStart()");
     }
 
     @Override
     protected void onRestoreInstanceState(Bundle saveInstanceState){
         super.onRestoreInstanceState(saveInstanceState);
-        Toast.makeText(getApplicationContext(), "Повторный запуск!! - onRestoreInstanceState()", Toast.LENGTH_SHORT).show();
-        Log.i(LOG, "Повторный запуск!! - onRestoreInstanceState()");//!!! ДЗ 2 !!!
+        showToastAndLog( "Повторный запуск!! - onRestoreInstanceState()");
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        Toast.makeText(getApplicationContext(), "onResume()", Toast.LENGTH_SHORT).show();
-        Log.i(LOG, "onResume()");//!!! ДЗ 2 !!!
+        showToastAndLog( "onResume()");
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        Toast.makeText(getApplicationContext(), "onPause()", Toast.LENGTH_SHORT).show();
-        Log.i(LOG, "onPause()");//!!! ДЗ 2 !!!
+        showToastAndLog( "onPause()");
     }
 
     @Override
     protected void onSaveInstanceState(Bundle saveInstanceState){
         super.onSaveInstanceState(saveInstanceState);
-        Toast.makeText(getApplicationContext(), "onSaveInstanceState()", Toast.LENGTH_SHORT).show();
-        Log.i(LOG, "onSaveInstanceState()");//!!! ДЗ 2 !!!
+        showToastAndLog( "onSaveInstanceState()");
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        Toast.makeText(getApplicationContext(), "onStop()", Toast.LENGTH_SHORT).show();
-        Log.i(LOG, "onStop()");//!!! ДЗ 2 !!!
+        showToastAndLog( "onStop()");
     }
 
     @Override
     protected void onRestart() {
         super.onRestart();
-        Toast.makeText(getApplicationContext(), "onRestart()", Toast.LENGTH_SHORT).show();
-        Log.i(LOG, "onRestart()");//!!! ДЗ 2 !!!
+        showToastAndLog( "onRestart()");
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Toast.makeText(getApplicationContext(), "onDestroy()", Toast.LENGTH_SHORT).show();
-        Log.i(LOG, "onDestroy()");//!!! ДЗ 2 !!!
+        showToastAndLog("onDestroy()");
+    }
+
+    public void showToastAndLog(String msg){
+        Toast.makeText(getApplicationContext(),"Activity: " + msg, Toast.LENGTH_SHORT).show();
+        Log.i("ACTIVITY", msg);
+    }
+
+    public void on_fragment_create(View view){
+        Fragment fragmentIn = fragment;
+        if(!fragmentIn.isAdded()) {
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.add(R.id.fragment_frame_layout, fragmentIn);
+            fragmentTransaction.commit();
+        }else {
+            showToastAndLog("Фрагмент создан ранее");
+        }
+    }
+
+    public void on_fragment_delete(View view){
+        Fragment fragmentIn = fragment;
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.remove(fragmentIn);
+        fragmentTransaction.commit();
     }
 }
